@@ -6,21 +6,23 @@ export class DotEnv implements Environment {
 
   public isInstance = true;
 
-  protected definitions: Record<keyof NodeJS.ProcessEnv, string> = {};
-
-  async init() {
-    this.definitions = Object.assign(
-      this.definitions,
-      { ...process.env },
-      dotenv.config().parsed || {},
-    );
+  constructor() {
+    dotenv.config();
   }
 
-  has(key: keyof NodeJS.ProcessEnv) {
-    return Object.keys(this.definitions).includes(key as string);
+  async init(): Promise<void> {
+    // No async initialization required. everything in parsed
+    // within the constructor.
   }
 
-  get<K extends keyof NodeJS.ProcessEnv>(key: K, fallback?: NodeJS.ProcessEnv[K]) {
-    return this.has(key) ? this.definitions[key] : fallback;
+  has(key: keyof NodeJS.ProcessEnv): boolean {
+    return Object.keys(process.env).includes(key as string);
+  }
+
+  get<K extends keyof NodeJS.ProcessEnv>(
+    key: K,
+    fallback?: NodeJS.ProcessEnv[K],
+  ): NodeJS.ProcessEnv[K] | undefined {
+    return this.has(key) ? process.env[key] : fallback;
   }
 }

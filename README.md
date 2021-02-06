@@ -29,10 +29,7 @@ import { DotEnv } from '@micra/dot-env';
 
 const env = new DotEnv();
 
-env.init()
-   .then(() => {
-     env.get('NODE_ENV', 'production');
-   });
+env.get('NODE_ENV', 'production');
 ```
 
 When using a Micra Application, this class can be used as:
@@ -47,6 +44,16 @@ app.registerEnv(DotEnv);
 // Somewhere else in your application:
 env('NODE_ENV', 'production');
 ```
+
+## API
+
+### `env.get<K extends keyof NodeJS.ProcessEnv>(key: K, fallback?: NodeJS.ProcessEnv[K]): NodeJS.ProcessEnv[K] | undefined`:
+
+Returns the value of a given environment variable. A fallback can be passed as a second arguments in case the given variable is not defined.
+
+### `env.has(key: keyof NodeJS.ProcessEnv): boolean`:
+
+Checks if a given variable is defined.
 
 ## Author
 
