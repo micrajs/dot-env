@@ -24,6 +24,8 @@ yarn add @micra/dot-env
 
 ## Usage
 
+### Standalone
+
 ```typescript
 import { DotEnv } from '@micra/dot-env';
 
@@ -32,7 +34,7 @@ const env = new DotEnv();
 env.get('NODE_ENV', 'production');
 ```
 
-When using a Micra Application, this class can be used as:
+### @micra/application
 
 ```typescript
 // In your src/app/environment/index.ts
